@@ -1,0 +1,14 @@
+
+inherits = "material_darker"
+
+
+"ui.statusline" = { "fg" = "black", "bg" = "off-white" }
+"ui.statusline.normal" = "black"
+"ui.statusline.insert" = "black"
+"ui.statusline.select" = "black"
+
+
+[palette]
+black = "#000000"
+white = "#ffffff"
+off-white = "#f9f1f1"

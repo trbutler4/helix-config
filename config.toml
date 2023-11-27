@@ -1,8 +1,9 @@
-theme = "material_darker"
+theme = "custom"
 
 [editor]
 line-number = "relative"
 bufferline = "multiple"
+color-modes = true
 
 [editor.cursor-shape]
 insert = "bar"
