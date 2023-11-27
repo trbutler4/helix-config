@@ -1,0 +1,24 @@
+
+
+[[language]]
+name = "typescript"
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
+
+[[language]]
+name = "python"
+language-servers = ["pyright"]
+
+[[language]]
+name = "rust"
+language-servers = ["rust-analyzer"]
+
+[[language]]
+name = "go"
+language-servers = ["gopls"]
+
+# this does not seem to work
+[[language]]
+name = "cairo"
+language-servers = ["scarb", "cairo-language-server", "cairo-language-server"]
+
+
