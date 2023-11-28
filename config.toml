@@ -2,7 +2,7 @@ theme = "custom"
 
 [editor]
 line-number = "relative"
-bufferline = "multiple"
+#bufferline = "multiple"
 color-modes = true
 
 [editor.cursor-shape]
@@ -24,5 +24,4 @@ mode.select = "SELECT"
 
 [editor.lsp]
 display-messages = true
-
 

@@ -1,0 +1,21 @@
+[package]
+name = "tree-sitter-t32"
+description = "Lauterbach TRACE32 script language grammar for tree-sitter"
+version = "2.2.1"
+keywords = ["parser", "lexer", "trace32", "t32", "lauterbach", "practice"]
+categories = ["parsing", "text-editors"]
+repository = "https://codeberg.org/xasc/tree-sitter-t32/"
+edition = "2018"
+license = "MIT"
+
+build = "bindings/rust/build.rs"
+include = ["bindings/rust/*", "grammar.js", "queries/*", "src/*"]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter = ">= 0.19, < 0.21"
+
+[build-dependencies]
+cc = "1.0"

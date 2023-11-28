@@ -1,0 +1,50 @@
+===
+line comment
+===
+
+x = 5 
+-- a comment
+
+---
+(unison
+    (term_declaration
+        (term_definition
+            (wordy_id)
+            (kw_equals)
+            (nat)
+            (comment))))
+===
+multiline comment
+===
+{-
+    this is a multiline comment
+-}
+---
+(unison
+    (comment))
+    
+===
+fold
+===
+
+---
+x = 5
+
+---
+(unison
+    (fold))
+===
+nested multiline comment
+===
+x = 5 {- this is a
+    multiline {-
+comment with -} nesting
+-}
+---
+(unison
+    (term_declaration
+        (term_definition
+            (wordy_id)
+            (kw_equals)
+            (nat)
+            (comment))))

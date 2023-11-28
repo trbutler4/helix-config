@@ -1,0 +1,8 @@
+node_modules
+*.log
+log
+log.html
+.unisonHistory
+
+# OS-specific
+.DS_Store

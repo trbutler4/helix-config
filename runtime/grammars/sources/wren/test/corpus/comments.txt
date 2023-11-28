@@ -1,0 +1,43 @@
+SPDX-FileCopyrightText: 2023 Jummit <jummit@web.de>
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+
+===========
+Single-line
+===========
+
+// this is a comment
+// another comment
+
+---
+
+(source_file
+	(comment)
+	(comment))
+
+==========
+Multi-line
+==========
+
+/* This
+   is
+   a
+   multi-line
+   comment. */
+
+---
+
+(source_file
+	(comment))
+
+======
+Nested
+======
+
+/* This is /* a nested */ comment. */
+
+---
+
+(source_file
+	(comment
+		(comment)))

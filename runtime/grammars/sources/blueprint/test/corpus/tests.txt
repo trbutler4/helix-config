@@ -1,0 +1,115 @@
+================================================================================
+Comments
+================================================================================
+
+// Top-level
+/* Top-level */
+Window {
+  // Inner
+  /* Inner */
+  title: "Properties";
+
+  styles [
+    "one",
+    // Array
+    /* Array */
+    "two"
+  ]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (object_definition
+    (object)
+    (block
+      (comment)
+      (comment)
+      (property_definition
+        (property_name)
+        (string
+          (string_fragment)))
+      (styles_list
+        (array
+          (string
+            (string_fragment))
+          (comment)
+          (comment)
+          (string
+            (string_fragment)))))))
+
+================================================================================
+Template syntax
+================================================================================
+
+template $MyWindow : Window {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    (template)
+    (template_name_qualifier
+      (object))
+    (object)
+    (block)))
+
+================================================================================
+Old template syntax
+================================================================================
+
+template .MyWindow : Window {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_definition
+    (template)
+    (template_name_qualifier
+      (object))
+    (object)
+    (block)))
+
+================================================================================
+Signal binding
+================================================================================
+
+Button {
+  clicked => $on_clicked();
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (object_definition
+    (object)
+    (block
+      (signal_binding
+        (signal_name
+          (property_name))
+        (function
+          (identifier
+            (object_id)))))))
+
+================================================================================
+Old signal binding
+================================================================================
+
+Button {
+  clicked => on_clicked();
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (object_definition
+    (object)
+    (block
+      (signal_binding
+        (signal_name
+          (property_name))
+        (function
+          (identifier
+            (object_id)))))))

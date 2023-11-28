@@ -1,0 +1,74 @@
+================================================================================
+directives
+================================================================================
+.set A, '\n
+.set MY_CONST, 0xff
+.global _start
+.ascii "hello world\n"
+.global a/*a*/
+.global b#b
+.global c #c
+.global d /*d*/
+.global e   /*e*/  /*eee*/ 
+.global f/*f*/  /*ff*//*fff*/  #ffff
+.global g/*
+g
+*/
+.global h
+        .section        .text.unlikely,"ax",@progbits
+--------------------------------------------------------------------------------
+(source_file
+  (directive
+    (directive_name)
+    (symbol)
+    (char))
+  (directive
+    (directive_name)
+    (symbol)
+    (number))
+  (directive
+    (directive_name)
+    (symbol))
+  (directive
+    (directive_name)
+    (string))
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (comment)
+  (directive
+    (directive_name)
+    (symbol))
+  (directive
+    (directive_name)
+    (symbol)
+    (string)
+    (type)))

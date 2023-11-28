@@ -1,0 +1,88 @@
+================================================================================
+Anonymous struct
+================================================================================
+
+Example := Window {
+    property<{name: string, score: int}> player: { name: "Foo", score: 100 };
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (struct_block_definition
+          (identifier)
+          (identifier
+            (type_builtin))
+          (identifier)
+          (identifier
+            (type_builtin)))
+        (identifier)
+        (struct_block_definition
+          (identifier)
+          (string_literal)
+          (identifier)
+          (int_literal))))))
+
+================================================================================
+Named struct
+================================================================================
+
+struct Player {
+    name: string,
+    score: int,
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct_item
+    (type_identifier)
+    (struct_block_definition
+      (identifier)
+      (identifier
+        (type_builtin))
+      (identifier)
+      (identifier
+        (type_builtin)))))
+
+================================================================================
+List of structs
+================================================================================
+
+Example := Window {
+    property<[{a: int, b: string}]> list-of-structs: [{ a: 1, b: "hello" }, {a: 2, b: "world"}];
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (array_literal
+          (struct_block_definition
+            (identifier)
+            (identifier
+              (type_builtin))
+            (identifier)
+            (identifier
+              (type_builtin))))
+        (identifier)
+        (array_literal
+          (struct_block_definition
+            (identifier)
+            (int_literal)
+            (identifier)
+            (string_literal))
+          (struct_block_definition
+            (identifier)
+            (int_literal)
+            (identifier)
+            (string_literal)))))))

@@ -1,0 +1,351 @@
+SPDX-FileCopyrightText: 2023 Jummit <jummit@web.de>
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+
+=====
+Index
+=====
+
+a.b
+
+---
+
+(source_file
+	(index_expression
+		(name)
+		(name)))
+
+====
+Call
+====
+
+call()
+test_func(a, 10)
+body {1}
+body(arg) {1}
+body {|arg| arg}
+
+---
+
+(source_file
+	(call_expression
+		(name))
+	(call_expression
+		(name)
+		(parameter_list
+			(name)
+      (number)))
+	(call_expression
+		(name)
+		(call_body
+      (number)))
+	(call_expression
+		(name)
+		(parameter_list
+			(name))
+		(call_body
+      (number)))
+	(call_expression
+		(name)
+		(call_body
+			(parameter_list
+				(name))
+			(name))))
+
+===============
+Call with block
+===============
+
+test_func {}
+
+---
+
+(source_file
+	(call_expression
+		(name)
+		(call_body)))
+
+=====
+Split
+=====
+
+System.print("hi")
+
+---
+
+(source_file
+	(call_expression
+		(index_expression
+			(name)
+			(name))
+		(parameter_list
+			(string))))
+
+=====
+Names
+=====
+
+camelCase
+PascalCase
+_under_score
+__static
+abc123
+ALL_CAPS
+
+---
+
+(source_file
+	(name)
+	(name)
+	(field)
+	(static_field)
+	(name)
+	(name))
+
+=========
+Operators
+=========
+
+
+=======
+Numbers
+=======
+
+0
+1234
+-5678
+3.14159
+1.0
+-12.34
+0.0314159e02
+0.0314159e+02
+314.159e-02
+0xcaffe2
+
+---
+
+(source_file
+	(number)
+	(number)
+	(number)
+	(number)
+	(number)
+	(number)
+	(number)
+	(number)
+	(number)
+	(number))
+
+========
+Booleans
+========
+
+true
+false
+
+---
+
+(source_file
+	(boolean)
+	(boolean))
+
+=======
+Strings
+=======
+
+"hi there"
+
+"hi
+there,
+again"
+
+"escaped \""
+
+"/* */"
+"//"
+
+---
+
+(source_file
+	(string)
+	(string)
+	(string)
+	(string)
+	(string))
+
+=============
+Interpolation
+=============
+
+"Math %(3 + 4 * 5) is fun!"
+
+---
+
+(source_file
+	(string
+		(binary_expression
+			(binary_expression
+				(number)
+				(operator)
+				(number))
+			(operator)
+			(number))))
+
+===========
+Raw strings
+===========
+
+"""hi there"""
+
+"""
+Hello world
+"""
+
+---
+
+(source_file
+	(raw_string)
+	(raw_string))
+
+======
+Ranges
+======
+
+3..8
+4...6
+
+---
+
+(source_file
+	(range
+		(number)
+		(number))
+	(range
+		(number)
+		(number)))
+
+====
+Null
+====
+
+null
+
+---
+
+(source_file
+	(null))
+
+=====
+Lists
+=====
+
+[1, "banana", true]
+
+---
+
+(source_file
+	(list
+		(number)
+		(string)
+		(boolean)))
+
+=========
+Subscript
+=========
+
+a[1]
+
+---
+
+(source_file
+	(subscript
+		(name)
+		(number)))
+
+====
+Maps
+====
+
+{
+  "a": "b",
+  "c": true,
+  5: true,
+}
+
+---
+
+(source_file
+	(map
+		(pair
+			(string)
+			(string))
+		(pair
+			(string)
+			(boolean))
+		(pair
+			(number)
+			(boolean))))
+
+===========
+Conditional
+===========
+
+1 != 2 ? "math is sane" : "math is not sane!"
+
+---
+
+(source_file
+	(conditional
+		(binary_expression
+			(number)
+			(operator)
+			(number))
+		(string)
+		(string)))
+
+======
+Binary
+======
+
+1 && 2 || 5 + 7 - 1 * 3
+
+---
+
+(source_file
+	(binary_expression
+		(binary_expression
+			(binary_expression
+				(binary_expression
+					(binary_expression
+						(number)
+						(operator)
+						(number))
+					(operator)
+					(number))
+				(operator)
+				(number))
+			(operator)
+			(number))
+		(operator)
+	(number)))
+
+=====
+Unary
+=====
+
+var a = -h
+var a = !b
+
+---
+
+(source_file
+	(variable_definition
+		(name)
+		(unary_expression
+			(operator)
+			(name)))
+	(variable_definition
+		(name)
+		(unary_expression
+			(operator)
+			(name))))

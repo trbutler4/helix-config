@@ -1,0 +1,1344 @@
+==================
+Macro definitions
+==================
+
+GLOBAL &Macroname
+
+LOCAL &GLOBAL
+
+PRIVATE &msg1 &(started) &{line_counT}
+
+---
+
+(script
+  (macro_definition
+    command: (identifier)
+    macro: (macro))
+  (macro_definition
+    command: (identifier)
+    macro: (macro))
+  (macro_definition
+    command: (identifier)
+    macro: (macro)
+    macro: (macro)
+    macro: (macro)))
+
+==================
+Recursive macro expansion
+==================
+
+&&cmd
+
+---
+
+(script
+  (recursive_macro_expansion
+    (identifier)))
+
+==================
+Parameter declarations
+==================
+
+PARAMETERS &_myvalue1 &my_Value2
+
+ENTRY &parameter
+
+RETURNVALUES &FIRST &(second)
+
+ENTRY %LInE &params
+
+---
+
+(script
+  (parameter_declaration
+    command: (identifier)
+    macro: (macro)
+    macro: (macro))
+  (parameter_declaration
+    command: (identifier)
+    macro: (macro))
+  (parameter_declaration
+    command: (identifier)
+    macro: (macro)
+    macro: (macro))
+  (parameter_declaration
+    command: (identifier)
+    (identifier)
+    macro: (macro)))
+
+==================
+Number literals
+==================
+
+&a = 0y100010001
+
+&b = 1000
+&b = 123445.
+
+&c = 0x12af
+&c = 0xA12F
+
+&d = 1.2
+&d = 1.3e+34
+&d = 0.123
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (integer))
+  (assignment_expression
+    left: (macro)
+    right: (integer))
+  (assignment_expression
+    left: (macro)
+    right: (integer))
+  (assignment_expression
+    left: (macro)
+    right: (integer))
+  (assignment_expression
+    left: (macro)
+    right: (integer))
+  (assignment_expression
+    left: (macro)
+    right: (float))
+  (assignment_expression
+    left: (macro)
+    right: (float))
+  (assignment_expression
+    left: (macro)
+    right: (float)))
+
+==================
+Bitmask literals
+==================
+
+&a = 0y10xx10
+&a = 0yX111XXX
+
+&b = 0xFX
+&b = 0xff1cxxxx
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (bitmask))
+  (assignment_expression
+    left: (macro)
+    right: (bitmask))
+  (assignment_expression
+    left: (macro)
+    right: (bitmask))
+  (assignment_expression
+    left: (macro)
+    right: (bitmask)))
+
+==================
+Time literals
+==================
+
+&a = 10s
+&a = 10.s
+&a = 23.24ms
+&a = 123us
+&a = 75.0ns
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (time))
+  (assignment_expression
+    left: (macro)
+    right: (time))
+  (assignment_expression
+    left: (macro)
+    right: (time))
+  (assignment_expression
+    left: (macro)
+    right: (time))
+  (assignment_expression
+    left: (macro)
+    right: (time)))
+
+
+==================
+Frequency literals
+==================
+
+Trace.CLOCK 50.MHZ 1.mhz
+Trace.CLOCK 10.1GHZ 0.7ghz
+SYStem.JtagClock  1kHZ 0.khz
+SYStem.VirtualTiming.InternalClock 1hz 10HZ
+
+
+---
+
+(script
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (frequency)
+      (frequency)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (frequency)
+      (frequency)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (frequency)
+      (frequency)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (frequency)
+      (frequency))))
+
+==================
+Percentage literals
+==================
+
+WinPOS 0% 30.70%
+
+InterCom.execute A FramePOS 50%,0,49%,83%
+
+---
+
+(script
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (percentage)
+      (percentage)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (identifier)
+      (identifier)
+      (percentage)
+      (integer)
+      (percentage)
+      (percentage))))
+
+
+==================
+String literals
+==================
+
+&a = "name"
+&a = "abc""def"
+&a = "\"
+
+&b = "line continuation \
+character"
+&b = \
+"line continuation character"
+
+&c = "first: &first"
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (string))
+  (assignment_expression
+    left: (macro)
+    right: (string))
+  (assignment_expression
+    left: (macro)
+    right: (string))
+  (assignment_expression
+    left: (macro)
+    right: (string))
+  (assignment_expression
+    left: (macro)
+    right: (string))
+  (assignment_expression
+    left: (macro)
+    right: (string
+      (macro))))
+
+==================
+Character literals
+==================
+
+&a = 'a'
+&a = 'z'
+&a = 'A'
+&a = 'Z'
+&a = '0'
+&a = '9'
+&a = '\'
+&a = '''
+
+&b = '\
+9'
+&b = \
+'0'
+
+&c = '\0'
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character))
+  (assignment_expression
+    left: (macro)
+    right: (character)))
+
+==================
+Symbol literals
+==================
+
+&a = _exit
+&a = SIEVE
+
+&b = \MCC\sieve
+&b = \\app\MCC\sieve
+&b = \\\1\\linux\do_mounts\load_ramdisk
+&b = \\\Dom0\\linux\do_mounts\load_ramdisk
+
+&c = \\linux\\load_ramdisk
+&c = \\\Dom0\\\\load_ramdisk
+
+&c = `main`
+&c = `nestxf1::~nestxf1`
+&c = \`ops::operator<<=`
+
+List \\sieve\sieve\fill_buffer+0x64
+
+List main\47
+Data.dump func4\4+0x0e
+
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (identifier))
+  (assignment_expression
+    left: (macro)
+    right: (identifier))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (assignment_expression
+    left: (macro)
+    right: (symbol))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (binary_expression
+        left: (symbol)
+        right: (integer))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (symbol)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (binary_expression
+        left: (symbol)
+        right: (integer)))))
+
+==================
+Address literals
+==================
+
+&a = P:0x1af
+&a = P:1234
+&a = L1:1234.
+
+&b = UD:0x1000
+&b = NSP:1:::50.::0x0000:0xffff000008080004
+
+&c = A:0y1:::2.:0xffff000008080004
+&c = B:0xa::22:10
+&c = C:10:0x00ffffff
+
+&d = 0xa:0xffff000008080004
+&d = 0xa::0xffff000008080004
+&d = 0xa:::0xffff000008080004
+
+&e = 1::2:0xffff000008080004
+&e = 1:::2::0xffff000008080004
+&e = 1:::2:0xffff000008080004
+
+&f = 1:::2::3:0xffff000008080004
+
+&g = N:
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      (memory_space
+        machine: (integer)
+        space: (integer)
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      (memory_space
+        machine: (integer)
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      (memory_space
+        space: (integer)
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      access: (access_class)
+      (memory_space
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        space: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        machine: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        space: (integer)
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        machine: (integer)
+        space: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        machine: (integer)
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (memory_space
+        machine: (integer)
+        space: (integer)
+        segment: (integer))
+      location: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (address
+      (access_class))))
+
+==================
+Path literals
+==================
+
+DO TEST.CMM
+DO .\test.cmm
+DO ..\test.cmm
+DO A:\FOLDER\TEST.CMM
+DO objs\abc.abs
+
+CD.DO objs/abs.abs
+CD.DO ./src/abc.def
+CD.DO ../src/abc.def
+CD.DO ~/proj/src/main.c
+
+PEDIT ~~\a\b\c
+PEDIT ~~~\a\b.cmm
+PEDIT ~~~~\demo\analyzer\perf.ts
+
+OPEN #4 ~~/a/b/c
+OPEN #4 ~~~/a/b.cmm
+OPEN #4 ~~~~/demo/analyzer/perf.ts
+
+PSTEP ~~/demo/arm/compiler/arm/arm9.cmm
+Data.LOAD *.abs
+DO \practice\*
+ChDir.DO \practice\*
+EDIT a?.c
+DIR *.obj
+
+---
+
+(script
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (file_handle)
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (file_handle)
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (file_handle)
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (path))))
+
+==================
+PRACTICE functions
+==================
+
+&a = Register(PC)
+&a = FOUND()
+&a = OS.ENV(HOME)
+&a = Data.Word.BigEndean(MX:0x1234)
+&a=STRing.Replace(OS.PWD(),"/",0.)
+
+  IF f0()&&(f1("&a",":"))
+  (
+    PRINT "A"
+  )
+
+  WHILE (EVAL.TYPE()==0x80)&&(STRing.FIND("&abc",":"))
+  (
+    PRINT "B"
+  )
+
+WAIT !RUN()
+
+PRINT SOFTWARE.64BIT()
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (identifier))))
+  (assignment_expression
+    left: (macro)
+    right: (call_expression
+      function: (identifier)
+      arguments: (argument_list)))
+  (assignment_expression
+    left: (macro)
+    right: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (identifier))))
+  (assignment_expression
+    left: (macro)
+    right: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (address
+          access: (access_class)
+          location: (integer)))))
+  (assignment_expression
+    left: (macro)
+    right: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (call_expression
+          function: (identifier)
+          arguments: (argument_list))
+        (string)
+        (integer))))
+  (if_block
+    command: (identifier)
+    condition: (binary_expression
+      left: (call_expression
+        function: (identifier)
+        arguments: (argument_list))
+      right: (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (string
+            (macro))
+          (string))))
+    (block
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string)))))
+  (while_block
+    command: (identifier)
+    condition: (binary_expression
+      left: (binary_expression
+        left: (call_expression
+          function: (identifier)
+          arguments: (argument_list))
+        right: (integer))
+      right: (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (string
+            (macro))
+          (string))))
+    (block
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string)))))
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (unary_expression
+          argument: (call_expression
+            function: (identifier)
+            arguments: (argument_list)))))
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (call_expression
+          function: (identifier)
+          arguments: (argument_list)))))
+
+==================
+Commands
+==================
+
+::B::WinPrint.Data.dump  0x1000 /Byte
+Var.DRAW flags[0..16] /Alternate 3
+Data.DRAWFFT ,%Decimal.Byte,VM:0++0x4f ,, 2.0 512., ,
+COVerage.ListModule %MULTI.OBC \sieve
+List ,,Register(PC)
+
+PEDIT *
+OPEN #1,"~~/license.t32" /Read
+
+CD.DO /home
+do a/b/c
+
+LOGGER.Mode.64Bit
+
+---
+
+(script
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (integer)
+      (option_expression
+        option: (identifier))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (hll_subscript_expression
+        argument: (identifier)
+        index: (hll_range_expression
+          left: (hll_number_literal)
+          right: (hll_number_literal)))
+      (option_expression
+        option: (identifier)
+        value: (integer))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (format_expression
+        value: (identifier)
+        value: (identifier))
+      (address
+        access: (access_class)
+        location: (binary_expression
+          left: (integer)
+          right: (integer)))
+      (float)
+      (integer)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (format_expression
+        value: (identifier)
+        value: (identifier))
+      (symbol)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (call_expression
+        function: (identifier)
+        arguments: (argument_list
+          (identifier)))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (literal)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (file_handle)
+      (string)
+      (option_expression
+        option: (identifier))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (option_expression
+        option: (identifier))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (binary_expression
+        left: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        right: (identifier))))
+  (command_expression
+    command: (identifier)))
+
+==================
+Host Commands
+==================
+
+OS.Command "&in" > "&out"
+OS.Hidden cat &src >> &dst
+OS.Hidden copy /b &a + &b  &c
+OS.OPEN "&ppd/report/index.html"
+
+---
+
+(script
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (string
+        (macro))
+      (string
+        (macro))))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (macro)
+      (macro)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (macro)
+      (macro)
+      (macro)))
+  (command_expression
+    command: (identifier)
+    arguments: (argument_list
+      (string
+        (macro)))))
+
+==================
+Commands with embedded blocks
+==================
+
+DIALOG.view
+(&+
+       POS 1. 1. 10.
+text:  TEXT "A Basic Dialog"
+)
+
+DIALOG.view
+(&-
+MYNAME: POS 22. 0. 24. 1.
+        DEFEDIT "" ""
+)
+
+---
+
+(script
+  (command_expression
+    command: (identifier))
+  (block
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (integer)
+        (integer)
+        (integer)))
+    (labeled_expression
+      label: (identifier)
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string)))))
+  (command_expression
+    command: (identifier))
+  (block
+    (labeled_expression
+      label: (identifier)
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (integer)
+          (integer)
+          (integer)
+          (integer))))
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (string)
+        (string)))))
+
+==================
+Assignment expression
+==================
+
+&a = 1
+&b=&(macro)
+
+&c=~&a+100.
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (integer))
+  (assignment_expression
+    left: (macro)
+    right: (macro))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (unary_expression
+        argument: (macro))
+      right: (integer))))
+
+==================
+Binary operators
+==================
+
+&a=1&&2
+&a = 1^^&b
+&a= &b||2
+&a= 1ms+2.ns
+&a= 1-&b
+&a= &b*2
+&a= 1/2
+&a= 1%&b
+&a= &b|2
+&a= 1^2
+&a= 1&&b
+&a= &b==2
+&a= 1!=2
+&a= 1>&b
+&a= &b>=2
+&a= 1<=2
+&a= 2<1
+&a= 1<<&b
+&a= &b>>2
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (macro)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (time)
+      right: (time)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (macro)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (macro)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (macro)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (macro)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (macro)
+      right: (integer))))
+
+==================
+Unary operators
+==================
+
+&a= !1
+&a=+&b
+&a= -5.7
+&a= ~1.ms
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (unary_expression
+      argument: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (unary_expression
+      argument: (macro)))
+  (assignment_expression
+    left: (macro)
+    right: (unary_expression
+      argument: (float)))
+  (assignment_expression
+    left: (macro)
+    right: (unary_expression
+      argument: (time))))
+
+==================
+Range operator
+==================
+
+&a= 0x1000..0x1fff
+&a=0x1000--0x1fff
+&a=(-1000.)--{-50.}
+&a='a'--'f'
+&a='A'..'F'
+&a=teststart--testend
+&a=`main`..`_exit`
+&a=2..4.
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (unary_expression
+        argument: (integer))
+      right: (unary_expression
+        argument: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (character)
+      right: (character)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (character)
+      right: (character)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (identifier)
+      right: (identifier)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (symbol)
+      right: (symbol)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (integer))))
+
+==================
+Operator precedence
+==================
+
+&a = 1<<!2*3
+&a = 1>>~2/3
+
+&b = 1+!2*3
+&b = 1-~2%3
+
+&c = 1+!2!=3
+&c = 1-~2>=3
+
+&d = 1&!2==3
+
+&e = 1&+2^3
+
+&f = 1|+2^3
+
+&g = 1&&-2^3
+
+&h = 1^^+2&&3
+
+&i = 1^^+2||3
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (integer)
+        right: (unary_expression
+          argument: (integer)))
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (integer)
+        right: (unary_expression
+          argument: (integer)))
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (integer)
+        right: (unary_expression
+          argument: (integer)))
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (integer)
+        right: (unary_expression
+          argument: (integer)))
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (integer)
+        right: (unary_expression
+          argument: (integer)))
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (integer))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (integer)
+        right: (unary_expression
+          argument: (integer)))
+      right: (integer))))
+
+==================
+Expressions with parentheses
+==================
+
+&a = (1+FOUND())
+&a = (-1+&(b))*3
+&a = {(1)&&(-&b^3)}
+
+---
+
+(script
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (call_expression
+        function: (identifier)
+        arguments: (argument_list))))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (binary_expression
+        left: (unary_expression
+          argument: (integer))
+        right: (macro))
+      right: (integer)))
+  (assignment_expression
+    left: (macro)
+    right: (binary_expression
+      left: (integer)
+      right: (binary_expression
+        left: (unary_expression
+          argument: (macro))
+        right: (integer)))))

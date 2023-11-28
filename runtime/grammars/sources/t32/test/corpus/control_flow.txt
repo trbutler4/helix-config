@@ -1,0 +1,1053 @@
+==================
+Labels
+==================
+
+abc:
+a_b.c: PRINT "A"
+
+---
+
+(script
+  (labeled_expression
+    label: (identifier))
+  (labeled_expression
+    label: (identifier)
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (string)))))
+
+==================
+IF block statements
+==================
+
+IF (&a)
+  STOP
+
+IF FOUND()
+  STOP
+ELSE
+  CONTinue
+
+IF &c
+  continue
+ELSE IF &d
+  stop
+
+IF &e
+  CONTinue
+ELSE IF &f
+  CONT
+ELSE IF &g
+  stop
+ELSE
+  cont
+
+---
+
+(script
+  (if_block
+    command: (identifier)
+    condition: (macro)
+    (command_expression
+      command: (identifier)))
+  (if_block
+    command: (identifier)
+    condition: (call_expression
+      function: (identifier)
+      arguments: (argument_list))
+    (command_expression
+      command: (identifier))
+    (else_block
+      command: (identifier)
+      (command_expression
+        command: (identifier))))
+  (if_block
+    command: (identifier)
+    condition: (macro)
+    (command_expression
+      command: (identifier))
+    (else_block
+      command: (identifier)
+      (if_block
+        command: (identifier)
+        condition: (macro)
+        (command_expression
+          command: (identifier)))))
+  (if_block
+    command: (identifier)
+    condition: (macro)
+    (command_expression
+      command: (identifier))
+    (else_block
+      command: (identifier)
+      (if_block
+        command: (identifier)
+        condition: (macro)
+        (command_expression
+          command: (identifier))
+        (else_block
+          command: (identifier)
+          (if_block
+            command: (identifier)
+            condition: (macro)
+            (command_expression
+            command: (identifier))
+            (else_block
+              command: (identifier)
+              (command_expression
+                command: (identifier)))))))))
+
+==================
+Nested blocks
+==================
+
+IF TRUE()
+(
+  (
+    PRINT %ERROR "A"
+  )
+  Eval &whitelist
+  (
+    PRINT %ERROR "B"
+  )
+)
+
+(
+  (
+    (
+    )
+  )
+)
+
+---
+
+(script
+  (if_block
+    command: (identifier)
+    condition: (call_expression
+      function: (identifier)
+      arguments: (argument_list))
+      (block
+        (block
+          (command_expression
+            command: (identifier)
+            arguments: (argument_list
+              (format_expression
+                value: (identifier))
+              (string))))
+        (command_expression
+          command: (identifier)
+          arguments: (argument_list
+            (macro)))
+        (block
+          (command_expression
+            command: (identifier)
+            arguments: (argument_list
+              (format_expression
+                value: (identifier))
+              (string))))))
+  (block
+    (block
+      (block))))
+
+==================
+Nested IF block statements
+==================
+
+IF &a
+  IF &b
+    stop
+  ELSE
+    IF &c
+    (
+      continue
+    )
+
+---
+
+(script
+  (if_block
+    command: (identifier)
+    condition: (macro)
+    (if_block
+    command: (identifier)
+      condition: (macro)
+      (command_expression
+      command: (identifier))
+      (else_block
+        command: (identifier)
+        (if_block
+          command: (identifier)
+          condition: (macro)
+          (block
+            (command_expression
+              command: (identifier))))))))
+
+==================
+IF block statements with parentheses
+==================
+
+IF &a
+(
+  STOP
+)
+ELSE IF &b
+; comment A
+(
+  CONTINUE
+)
+ELSE
+; comment B
+(
+  BREAK
+)
+
+---
+
+(script
+  (if_block
+    command: (identifier)
+    condition: (macro)
+    (block
+      (command_expression
+        command: (identifier)))
+    (else_block
+      command: (identifier)
+      (if_block
+        command: (identifier)
+        condition: (macro)
+        (comment)
+        (block
+          (command_expression
+            command: (identifier)))
+          (else_block
+            command: (identifier)
+            (comment)
+            (block
+              (command_expression
+                command: (identifier))))))))
+
+==================
+WHILE block statements
+==================
+
+WHILE &a
+  Step
+
+---
+
+(script
+  (while_block
+    command: (identifier)
+    condition: (macro)
+    (command_expression
+      command: (identifier))))
+
+==================
+WHILE block statements with parentheses
+==================
+
+WHILE (sYmbol.EXIT(main))
+(
+  Step
+  Break
+)
+
+WHILE (FALSE())
+// comment
+(
+  ECHO "test"
+)
+
+---
+
+(script
+  (while_block
+    command: (identifier)
+    condition: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (identifier)))
+    (block
+      (command_expression
+        command: (identifier))
+      (command_expression
+        command: (identifier))))
+  (while_block
+    command: (identifier)
+    condition: (call_expression
+      function: (identifier)
+      arguments: (argument_list))
+    (comment)
+    (block
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string))))))
+
+==================
+RePeaT block statements
+==================
+
+RePeaT 10. PRINT "A"
+
+RePeaT &a
+  print
+
+REPEAT 0xaAfF09
+(
+  cont
+)
+
+RPT
+(
+  b
+)
+
+rpt
+(
+  s
+)
+WHILE &a
+
+REPEAT TRUE()
+; comment
+(
+  cont
+)
+
+---
+
+(script
+  (repeat_block
+    command: (identifier)
+    condition: (integer)
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (string))))
+  (repeat_block
+    command: (identifier)
+    condition: (macro)
+    (command_expression
+      command: (identifier)))
+  (repeat_block
+    command: (identifier)
+    condition: (integer)
+    (block
+      (command_expression
+        command: (identifier))))
+  (repeat_block
+    command: (identifier)
+    (block
+      (command_expression
+        command: (identifier))))
+  (repeat_block
+    command: (identifier)
+    (block
+      (command_expression
+        command: (identifier)))
+    condition: (macro))
+  (repeat_block
+    command: (identifier)
+    condition: (call_expression
+      function: (identifier)
+      arguments: (argument_list))
+    (comment)
+    (block
+      (command_expression
+        command: (identifier)))))
+
+==================
+ON PRACTICE event control
+==================
+
+ON ALWAYS inherit
+ON ERROR CONTinue
+ON stoP Default
+ON CMD step DO ~/./run?.*mm
+ON TIME 1ns GOSUB label
+
+ON TIME 2.0s GOTO
+(
+  break
+)
+
+ON TIME 2.0ms JUMPTO l1
+ON TIME 2.0us default
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (time)
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (time)
+      (identifier)))
+  (block
+    (command_expression
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (time)
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (time)
+      (identifier))))
+
+==================
+ON device event control
+==================
+
+ON ABREAK DEFault
+ON CORESWITCH DEFault
+ON GO DEFault
+ON PBREAK DEFault
+ON POWERDOWN DEFault
+ON POWERUP DEFault
+ON RESET DEFault
+ON SYSDOWN DEFault
+ON SYSUP DEFault
+ON TRIGGER DEFault
+
+ON PBREAKAT P:3:::42:0xfff8000 DEFault
+
+ON OBREAK DEFault
+ON ATRIGGER DEFault
+ON OTRIGGER DEFault
+ON CATRIGGER DEFault
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (address
+        (access_class)
+        (memory_space
+          (integer)
+          (integer))
+        (integer))
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier))))
+
+==================
+ON CPU event control
+==================
+
+ON PDRESETOFF DO run.cmm
+ON BOOTSTALL DO run.cmm
+ON CPUBOOTSTALL DO run.cmm
+ON TRACEHUBBREAK DO run.cmm
+ON PBREAKRESET DO run.cmm
+ON PBREAKVMENTRY DO run.cmm
+ON PBREAKVMEXIT DO run.cmm
+ON PBREAKSMMENTRY DO run.cmm
+ON PBREAKSMMEXIT DO run.cmm
+ON PBREAKGENERALDETECT DO run.cmm
+ON PBREAKINIT DO run.cmm
+ON PBREAKMACHINECHECK DO run.cmm
+ON PBREAKSHUTDOWN DO run.cmm
+ON PBREAKC6EXIT DO run.cmm
+ON PBREAKENCLU DO run.cmm
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path))))
+
+==================
+GLOBALON PRACTICE event control
+==================
+
+GLOBALON ALWAYS DO "file.cmm"
+GLOBALON ERROR DO test.cmm
+GLOBALON STOP DO a/b/c.cmm
+GLOBALON CMD step DO run.cmm
+GLOBALON TIME 10.0ns DO do.cmm
+GLOBALON CMD print EXEcute continue
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (string)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (time)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))))
+
+==================
+GLOBALON device event control
+==================
+
+GLOBALON ABREAK DO run.cmm
+GLOBALON CORESWITCH DO run.cmm
+GLOBALON GO DO run.cmm
+GLOBALON PBREAK DO run.cmm
+GLOBALON POWERDOWN DO run.cmm
+GLOBALON POWERUP DO run.cmm
+GLOBALON RESET DO run.cmm
+GLOBALON SYSDOWN DO run.cmm
+GLOBALON SYSUP DO run.cmm
+GLOBALON TRIGGER DO run.cmm
+
+GLOBALON PBREAKAT P:3:::42:0xfff8000 DO run.cmm
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (address
+        (access_class)
+        (memory_space
+          (integer)
+          (integer))
+        (integer))
+      (identifier)
+      (path))))
+
+==================
+GLOBALON CPU event control
+==================
+
+GLOBALON PDRESETOFF DO run.cmm
+GLOBALON BOOTSTALL DO run.cmm
+GLOBALON CPUBOOTSTALL DO run.cmm
+GLOBALON TRACEHUBBREAK DO run.cmm
+GLOBALON PBREAKRESET DO run.cmm
+GLOBALON PBREAKVMENTRY DO run.cmm
+GLOBALON PBREAKVMEXIT DO run.cmm
+GLOBALON PBREAKSMMENTRY DO run.cmm
+GLOBALON PBREAKSMMEXIT DO run.cmm
+GLOBALON PBREAKGENERALDETECT DO run.cmm
+GLOBALON PBREAKINIT DO run.cmm
+GLOBALON PBREAKMACHINECHECK DO run.cmm
+GLOBALON PBREAKSHUTDOWN DO run.cmm
+GLOBALON PBREAKC6EXIT DO run.cmm
+GLOBALON PBREAKENCLU DO run.cmm
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path)))
+  (command_expression
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier)
+      (path))))
+
+==================
+Var.IF block statements
+==================
+
+Var.IF \a<sizeof(array)
+  PRINT "OK"
+
+---
+
+(script
+  (if_block
+    command: (identifier)
+    condition: (hll_binary_expression
+      left: (trace32_hll_variable)
+      right: (hll_sizeof_expression
+        type: (hll_type_descriptor
+          type: (hll_type_identifier))))
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (string)))))
+
+==================
+Var.WHILE block statements
+==================
+
+Var.WHILE string_array[\i]!='\0'
+  Var.set \i++
+
+---
+
+(script
+  (while_block
+    command: (identifier)
+    condition: (hll_binary_expression
+      left: (hll_subscript_expression
+        argument: (identifier)
+        index: (trace32_hll_variable))
+      right: (hll_char_literal
+        (hll_escape_sequence)))
+    (command_expression
+      command: (identifier)
+      arguments: (argument_list
+        (hll_update_expression
+          argument: (trace32_hll_variable))))))
+
+
+==================
+Subroutine Calls
+==================
+
+GOSUB printA
+GOSUB printB "B"
+GOSUB printC "begin:" &second
+
+printA:
+(
+  PRINT "A"
+  RETURN
+)
+
+sUBROUtINE printB
+(
+  ENTRY &in
+
+  PRINT "&in"
+  RETURN
+)
+
+SUBROUTINE printC
+// comment
+(
+  PARAMETERS &a &b
+
+  PRINT "&a"+"&b"
+  ENDDO
+)
+
+---
+
+(script
+  (subroutine_call_expression
+    command: (identifier)
+    subroutine: (identifier))
+  (subroutine_call_expression
+    command: (identifier)
+    subroutine: (identifier)
+    arguments: (argument_list
+      (string)))
+  (subroutine_call_expression
+    command: (identifier)
+    subroutine: (identifier)
+    arguments: (argument_list
+      (string)
+      (macro)))
+  (labeled_expression
+    label: (identifier)
+    (block
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string)))
+      (command_expression
+        command: (identifier))))
+    (subroutine_block
+      command: (identifier)
+      subroutine: (identifier)
+      (block
+        (parameter_declaration
+          command: (identifier)
+          macro: (macro))
+        (command_expression
+          command: (identifier)
+          arguments: (argument_list
+            (string
+              (macro))))
+        (command_expression
+          command: (identifier))))
+    (subroutine_block
+      command: (identifier)
+      subroutine: (identifier)
+      (comment)
+      (block
+        (parameter_declaration
+          command: (identifier)
+          macro: (macro)
+          macro: (macro))
+        (command_expression
+          command: (identifier)
+          arguments: (argument_list
+            (binary_expression
+              left: (string
+                (macro))
+              right: (string
+                (macro)))))
+        (command_expression
+          command: (identifier)))))

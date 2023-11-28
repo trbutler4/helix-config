@@ -1,0 +1,102 @@
+==================
+Comments
+==================
+
+// Comment A
+  ; Comment B
+
+PRINT "A";
+ECHO "B" // a\
+            b
+
+---
+
+(script
+  (comment)
+  (comment)
+  (command_expression
+    (identifier)
+    (argument_list
+      (string))
+    (comment))
+  (command_expression
+    (identifier)
+    (argument_list
+      (string))
+    (comment)))
+
+==================
+Comments before line with trailing whitespaces
+==================
+
+  Data.Set P:(COREBASE()+0x783) %Long 0x2 ; Comment A.RCE
+    
+  Data.Set AHB:0x21381a0b %BE 0xXXXXxxx3    ; Comment C
+
+---
+
+(script
+  (command_expression
+    (identifier)
+    (argument_list
+      (address
+        (access_class)
+        (binary_expression
+          (call_expression
+            (identifier)
+            (argument_list))
+          (integer)))
+      (format_expression
+        (identifier))
+      (integer))
+    (comment))
+  (command_expression
+    (identifier)
+    (argument_list
+      (address
+        (access_class)
+        (integer))
+      (format_expression
+        (identifier))
+      (bitmask))
+    (comment)))
+
+==================
+Interjected comments
+==================
+
+IF &a
+ // Comment here
+(
+  PRINT "true"
+)
+ELSE
+// or here
+  PRINT "false"
+
+(
+  ; Block nesting
+
+)
+
+---
+
+(script
+  (if_block
+    command: (identifier)
+    condition: (macro)
+    (comment)
+    (block
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string))))
+    (else_block
+      command: (identifier)
+      (comment)
+      (command_expression
+        command: (identifier)
+        arguments: (argument_list
+          (string)))))
+  (block
+    (comment)))

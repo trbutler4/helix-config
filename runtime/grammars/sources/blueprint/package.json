@@ -1,0 +1,41 @@
+{
+  "name": "tree-sitter-blueprint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/gabmus/tree-sitter-blueprint.git"
+  },
+  "keywords": [
+    "treesitter",
+    "tree-sitter",
+    "blueprint"
+  ],
+  "author": "Gabriele Musco",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://gitlab.com/gabmus/tree-sitter-blueprint/issues"
+  },
+  "homepage": "https://gitlab.com/gabmus/tree-sitter-blueprint#readme",
+  "dependencies": {
+    "nan": "^2.16.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.7"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.blp",
+      "file-types": [
+        "blueprint", "blp"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ]
+}

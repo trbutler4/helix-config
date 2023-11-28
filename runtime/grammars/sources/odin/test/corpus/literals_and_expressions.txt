@@ -1,0 +1,279 @@
+================================================================================
+Basic declarations
+================================================================================
+
+package declarations
+
+a :: 10
+b := c
+a, b, c :: 1, true, d
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (package_clause
+    (keyword)
+    (package_identifier))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (int_literal))
+  (var_declaration
+    name: (identifier)
+    (operator)
+    (operator)
+    value: (identifier))
+  (const_declaration
+    name: (const_identifier)
+    name: (const_identifier)
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (int_literal)
+    value: (bool_literal)
+    value: (identifier)))
+
+================================================================================
+Literals
+================================================================================
+
+package literals
+
+ints :: {
+    10_000_000,
+    0xDEAD_BEEF,
+    0b0001_0010,
+    0o777,
+}
+
+bools :: {
+    true,
+    false,
+}
+
+floats :: {
+    3.1415,
+    1.,
+    .1,
+    1e-15,
+    3.0e8,
+    1e2,
+}
+
+strings :: {
+    "the quick brown fox jumps over the lazy dog",
+    "hello there\n",
+    `hello there\n`,
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (package_clause
+    (keyword)
+    (package_identifier))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (int_literal)
+        (int_literal)
+        (int_literal)
+        (int_literal))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (bool_literal)
+        (bool_literal))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (float_literal)
+        (float_literal)
+        (float_literal)
+        (float_literal)
+        (float_literal)
+        (float_literal))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (interpreted_string_literal)
+        (interpreted_string_literal
+          (escape_sequence))
+        (raw_string_literal)))))
+
+================================================================================
+Simple expressions
+================================================================================
+
+package expressions
+
+left_unary :: {
+    +10,
+    -1.0,
+    &a,
+    ~0b01010101,
+    auto_cast 1,
+}
+
+right_unary :: {
+    a^,
+    a or_return,
+}
+
+proc_call :: {
+    f(),
+    g(10, 20),
+    h(a = 10, b = 20),
+}
+
+indexing_and_slicing :: {
+    a[0],
+    a[:],
+    a[begin:],
+    a[:end],
+    a[begin:end],
+}
+
+binary :: {
+    a + b,
+    a - b,
+    a * b,
+    a / b,
+    a or_else b,
+    0b10101010 ~ 0b01010101,
+    0b10101010 & 0b01010101,
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (package_clause
+    (keyword)
+    (package_identifier))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (left_unary_expression
+          operator: (operator)
+          operand: (int_literal))
+        (left_unary_expression
+          operator: (operator)
+          operand: (float_literal))
+        (left_unary_expression
+          operator: (operator)
+          operand: (identifier))
+        (left_unary_expression
+          operator: (operator)
+          operand: (int_literal))
+        (type_conversion
+          (operator)
+          (int_literal)))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (right_unary_expression
+          operand: (identifier)
+          operator: (operator))
+        (right_unary_expression
+          operand: (identifier)
+          operator: (operator)))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (proc_call
+          procedure: (identifier))
+        (proc_call
+          procedure: (identifier)
+          arguments: (initializer_list
+            (int_literal)
+            (int_literal)))
+        (proc_call
+          procedure: (identifier)
+          arguments: (initializer_list
+            (single_assignment
+              lhs: (identifier)
+              rhs: (int_literal))
+            (single_assignment
+              lhs: (identifier)
+              rhs: (int_literal)))))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (index_expression
+          operand: (identifier)
+          index: (int_literal))
+        (index_expression
+          operand: (identifier)
+          (operator))
+        (index_expression
+          operand: (identifier)
+          start: (identifier)
+          (operator))
+        (index_expression
+          operand: (identifier)
+          (operator)
+          end: (identifier))
+        (index_expression
+          operand: (identifier)
+          start: (identifier)
+          (operator)
+          end: (identifier)))))
+  (const_declaration
+    name: (const_identifier)
+    (operator)
+    (operator)
+    value: (compound_literal
+      contents: (initializer_list
+        (binary_expression
+          left: (identifier)
+          operator: (operator)
+          right: (identifier))
+        (binary_expression
+          left: (identifier)
+          operator: (operator)
+          right: (identifier))
+        (binary_expression
+          left: (identifier)
+          operator: (operator)
+          right: (identifier))
+        (binary_expression
+          left: (identifier)
+          operator: (operator)
+          right: (identifier))
+        (binary_expression
+          left: (identifier)
+          operator: (operator)
+          right: (identifier))
+        (binary_expression
+          left: (int_literal)
+          operator: (operator)
+          right: (int_literal))
+        (binary_expression
+          left: (int_literal)
+          operator: (operator)
+          right: (int_literal))))))

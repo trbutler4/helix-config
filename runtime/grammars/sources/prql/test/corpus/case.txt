@@ -1,0 +1,91 @@
+================================================================================
+Case #1
+================================================================================
+
+from employees
+derive distance = case {
+  city == "Calgary" => 0,
+  city == "Edmonton" => 300,
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (pipeline
+    (from
+      (keyword_from)
+      (identifier))
+    (transforms
+      (derives
+        (keyword_derive)
+        (term
+          (assignment
+            (field
+              (identifier))
+            (case
+              (keyword_case)
+              (case_condition
+                (binary_expression
+                  (field
+                    (identifier))
+                  (literal
+                    (literal_string)))
+                (literal
+                  (integer)))
+              (case_condition
+                (binary_expression
+                  (field
+                    (identifier))
+                  (literal
+                    (literal_string)))
+                (literal
+                  (integer))))))))))
+
+================================================================================
+Case with default
+================================================================================
+
+from employees
+derive distance = case {
+  city == "Calgary" => 0,
+  city == "Edmonton" => 300,
+  true => "Unknown",
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (pipeline
+    (from
+      (keyword_from)
+      (identifier))
+    (transforms
+      (derives
+        (keyword_derive)
+        (term
+          (assignment
+            (field
+              (identifier))
+            (case
+              (keyword_case)
+              (case_condition
+                (binary_expression
+                  (field
+                    (identifier))
+                  (literal
+                    (literal_string)))
+                (literal
+                  (integer)))
+              (case_condition
+                (binary_expression
+                  (field
+                    (identifier))
+                  (literal
+                    (literal_string)))
+                (literal
+                  (integer)))
+              (case_condition
+                (literal
+                  (keyword_true))
+                (literal
+                  (literal_string))))))))))

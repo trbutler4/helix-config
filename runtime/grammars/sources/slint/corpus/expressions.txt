@@ -1,0 +1,324 @@
+================================================================================
+Relative properties
+================================================================================
+
+Example := Rectangle {
+    foo := Rectangle {
+        x: 42px;
+    }
+     x: foo.x;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (type_identifier)
+        (type_identifier)
+        (comp_body
+          (assign_property
+            (identifier)
+            (num_units
+              (int_literal)
+              (units)))))
+      (assign_property
+        (identifier)
+        (field_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Ternary Expression
+================================================================================
+
+Example := Window {
+    Rectangle {
+        background: true ? 5 : 4;
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (type_identifier)
+        (comp_body
+          (assign_property
+            (identifier)
+            (ternary_expression
+              (bool_literal)
+              (int_literal)
+              (int_literal))))))))
+
+================================================================================
+Chained ternary Expression
+================================================================================
+
+Example := Window {
+    Rectangle {
+        border-color: !touch.enabled ? #888
+            : touch.pressed ? #aaa
+            : #555;
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (type_identifier)
+        (comp_body
+          (assign_property
+            (identifier)
+            (ternary_expression
+              (ternary_expression
+                (unary_expression
+                  (field_expression
+                    (identifier)
+                    (identifier)))
+                (color_literal)
+                (field_expression
+                  (identifier)
+                  (identifier)))
+              (color_literal)
+              (color_literal))))))))
+
+================================================================================
+Arrays as expressions
+================================================================================
+
+Example := Window {
+    property<[int]> list-of-int: [1,2,3];
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (array_literal
+          (identifier
+            (type_builtin)))
+        (identifier)
+        (array_literal
+          (int_literal)
+          (int_literal)
+          (int_literal))))))
+
+================================================================================
+String expression
+================================================================================
+
+Example := Text {
+    text: "hello";
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (assign_property
+        (identifier)
+        (string_literal)))))
+
+================================================================================
+Color expression
+================================================================================
+
+Example := Window {
+    property<color> c1: #ffaaff;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (type_identifier
+          (type_builtin))
+        (identifier)
+        (color_literal)))))
+
+================================================================================
+Brush expression
+================================================================================
+
+Example := Window {
+    property<brush> b2: Colors.red;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (type_identifier
+          (type_builtin))
+        (identifier)
+        (field_expression
+          (identifier)
+          (identifier
+            (constant_builtin)))))))
+
+================================================================================
+Function expression
+================================================================================
+
+Example := Window {
+    property<brush> b2: brighter(55);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (type_identifier
+          (type_builtin))
+        (identifier)
+        (call_expression
+          (identifier)
+          (function_call_args
+            (int_literal)))))))
+
+================================================================================
+Empty expression block
+================================================================================
+
+Example := Window {
+    clicked => { }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_handler
+        (function_identifier)
+        (handler_body)))))
+
+================================================================================
+Empty expression with semi-colon
+================================================================================
+
+Example := Window {
+    clicked => { ; }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_handler
+        (function_identifier)
+        (handler_body)))))
+
+================================================================================
+Complicated expression
+================================================================================
+
+// (42 + ((5 * 3) / 2)) - (1 * 2);
+
+Example := Rectangle {
+    x: 42 + 5 * 3 / 2 - 1 * 2;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (assign_property
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (int_literal)
+            (binary_expression
+              (binary_expression
+                (int_literal)
+                (int_literal))
+              (int_literal)))
+          (binary_expression
+            (int_literal)
+            (int_literal)))))))
+
+================================================================================
+If condition expression
+================================================================================
+
+Example := Rectangle {
+    clicked => {
+        if (!root.disable-tiles) {
+            tile.image-visible = !tile.image-visible;
+            root.check-if-pair-solved();
+        }
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_handler
+        (function_identifier)
+        (handler_body
+          (if_expression
+            (unary_expression
+              (field_expression
+                (identifier
+                  (variable_builtin))
+                (identifier)))
+            (consequence_body
+              (assign_expression
+                (field_expression
+                  (identifier)
+                  (identifier))
+                (unary_expression
+                  (field_expression
+                    (identifier)
+                    (identifier))))
+              (call_expression
+                (field_expression
+                  (identifier
+                    (variable_builtin))
+                  (identifier))
+                (function_call_args)))))))))

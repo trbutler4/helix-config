@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: tree-sitter-wren
+Upstream-Contact: Jummit <jummit@web.de>
+Source: https://sr.ht/~jummit/tree-sitter-wren
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...

@@ -1,0 +1,25 @@
+{
+  "name": "tree-sitter-nu",
+  "version": "0.0.1",
+  "description": "nu-lang",
+  "main": "bindings/node",
+  "scripts": {
+    "test": " "
+  },
+  "author": "The Nushell Contributors",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.16.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.7"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.nu",
+      "file-types": [
+        "nu"
+      ]
+    }
+  ]
+}

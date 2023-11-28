@@ -1,0 +1,52 @@
+================================================================================
+Standalone comment
+================================================================================
+<!-- This is a comment! -->
+--------------------------------------------------------------------------------
+
+(document
+  (comment))
+
+================================================================================
+Comment after prolog
+================================================================================
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   -->
+--------------------------------------------------------------------------------
+
+(document
+  (comment))
+
+================================================================================
+Big comment after prolog non empty
+================================================================================
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   -->
+<!ELEMENT tag EMPTY>
+--------------------------------------------------------------------------------
+
+(document
+    (comment)
+    (element_decl
+      (element_name)
+      (content_spec)))
+
+
+======================
+Comments between
+======================
+<!ELEMENT tag (#PCDATA)>
+<!-- This is a test comment -->
+<!ATTLIST tag tagname CDATA #REQUIRED>
+----------------------
+
+(document
+      (element_decl
+        (element_name)
+        (content_spec
+          (mixed)))
+      (comment)
+      (attlist_decl
+        (attlist_name)
+        (attribute_def
+          (attribute_name)
+          (attribute_type)
+          (default_decl))))

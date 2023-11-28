@@ -1,0 +1,114 @@
+name: Build nightly release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  dist:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            target: windows-x86_64
+            bin_ext: .exe
+            cc: msvc
+          - os: ubuntu-20.04
+            target: linux-x86_64
+            cc: gcc
+          - os: macos-latest
+            target: darwin-x86_64
+            cc: clang
+          - os: macos-arm64
+            target: darwin-arm64
+            cc: clang
+
+    name: Build binary artifact for ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    env:
+      CC: ${{ matrix.cc }}
+
+    steps:
+      - uses: msys2/setup-msys2@v2
+        if: matrix.os == 'windows-latest'
+
+      - name: Install V
+        id: install-v
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: Checkout v-analyzer
+        uses: actions/checkout@v3
+        with:
+          path: v-analyzer
+
+      - name: Compile
+        run: |
+          cd v-analyzer
+          v install
+          v build.vsh release
+
+      - name: Create ZIP archive
+        if: matrix.os != 'windows-latest'
+        run: |
+          zip -j9 v-analyzer-${{ matrix.target }} ./v-analyzer/bin/v-analyzer
+
+      - name: Create ZIP archive
+        if: matrix.os == 'windows-latest'
+        shell: msys2 {0}
+        run: |
+          powershell Compress-Archive ".\v-analyzer\bin\v-analyzer.exe" v-analyzer-${{ matrix.target }}.zip
+        # Note: the powershell Compress-Archive line is from:
+        # https://superuser.com/a/1336434/194881
+        # It is needed, because `zip` is not installed by default :-|
+
+      - name: Create artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: v-analyzer-${{ matrix.target }}.zip
+          path: ./v-analyzer-${{ matrix.target }}.zip
+
+  nightly-release:
+    name: Create Nightly GitHub Release
+    needs: [ dist ]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Fetch linux-x86_64
+        uses: actions/download-artifact@v1
+        with:
+          name: v-analyzer-linux-x86_64.zip
+          path: ./
+      - name: Fetch darwin-x86_64
+        uses: actions/download-artifact@v1
+        with:
+          name: v-analyzer-darwin-x86_64.zip
+          path: ./
+      - name: Fetch darwin-arm64
+        uses: actions/download-artifact@v1
+        with:
+          name: v-analyzer-darwin-arm64.zip
+          path: ./
+      - name: Fetch windows-x86_64
+        uses: actions/download-artifact@v1
+        with:
+          name: v-analyzer-windows-x86_64.zip
+          path: ./
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        name: Create Release and Upload Assets
+        id: create_release
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "nightly release"
+          files: |
+            v-analyzer-linux-x86_64.zip
+            v-analyzer-darwin-x86_64.zip
+            v-analyzer-darwin-arm64.zip
+            v-analyzer-windows-x86_64.zip

@@ -1,0 +1,26 @@
+{
+  "name": "tree-sitter-slint",
+  "version": "0.1.0",
+  "description": "A Tree Sitter Parse for Slint",
+  "main": "bindings/node",
+  "scripts": {
+    "lint": "prettier --check grammar.js",
+    "format": "prettier --write grammar.js",
+    "build": "tree-sitter generate",
+    "test": "tree-sitter test"
+  },
+  "keywords": [
+    "Tree Sitter",
+    "Parser",
+    "Slint"
+  ],
+  "author": "Jared Moulton <jaredmoulton3@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.15.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.4",
+    "prettier": "^2.7.1"
+  }
+}

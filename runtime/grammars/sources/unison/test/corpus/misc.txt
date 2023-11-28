@@ -1,0 +1,16 @@
+===
+[misc] Watch expression
+===
+> square 4
+---
+(unison
+    (watch_expression
+        (function_application
+            (wordy_id)
+            (nat))))
+===
+[misc] Test watch expression
+===
+foo> 5
+---
+(unison (test_watch_expression (wordy_id) (nat)))

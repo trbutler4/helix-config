@@ -1,0 +1,42 @@
+===
+[Binding] destructuring bind
+===
+> let 
+  (Box a) = boxA
+  a
+> let (first, second) = tuple
+---
+(unison
+    (watch_expression (exp_let 
+        (kw_let) 
+        (destructuring_bind 
+            (constructor_or_variable_pattern (wordy_id) (constructor_or_variable_pattern (wordy_id)))
+            (kw_equals) (wordy_id))
+        (wordy_id)))
+    (watch_expression (exp_let
+        (kw_let)
+        (destructuring_bind (tuple_pattern 
+            (constructor_or_variable_pattern (wordy_id))
+            (constructor_or_variable_pattern (wordy_id)))
+        (kw_equals)
+        (wordy_id))))
+)
+===
+[Binding] destructuring in a lambda
+===
+> List.map (cases (first, second) -> second) [(1, 2), (3, 4)]
+---
+(unison
+    (watch_expression 
+        (function_application
+            (path) (wordy_id)
+            (tuple_or_parenthesized 
+                (cases) 
+                (pattern (tuple_pattern 
+                    (constructor_or_variable_pattern (wordy_id))
+                    (constructor_or_variable_pattern (wordy_id)))
+                    (arrow_symbol)
+                    (wordy_id)))
+            (literal_list
+                (tuple_or_parenthesized (nat) (nat))
+                (tuple_or_parenthesized (nat) (nat))))))

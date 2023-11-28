@@ -1,0 +1,636 @@
+=======
+Package
+=======
+
+package foobar
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier)))
+
+=========
+Empty component without arguments
+=========
+
+package foobar
+
+templ Foo() {}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    (component_identifier)
+    (parameter_list)
+    (component_block)))
+
+=========
+Empty component with arguments
+=========
+
+package foobar
+
+templ Foo(name string, foo int, bar []string) {}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier))
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier))
+      (parameter_declaration
+        name: (identifier)
+        type: (slice_type
+          element: (type_identifier))))
+    (component_block)))
+
+=========
+Component with a single element taking a parameter
+=========
+
+package foobar
+
+templ Foo(text string) {
+  <button class="button">FOO</button>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier)
+          (attribute
+            name: (attribute_name)
+            value: (quoted_attribute_value
+              (attribute_value))))
+        (element_text)
+        (tag_end
+          name: (element_identifier))))))
+
+====
+Component with multiple elements and an expression
+====
+
+package testhtml
+
+templ BasicTemplate(url string) {
+  <div>
+    <a href={ templ.URL(url) } class="red">text</a>
+  </div>
+  <hr/>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier))
+        (element
+          (tag_start
+            name: (element_identifier)
+            (attribute
+              name: (attribute_name)
+              value: (expression
+                (call_expression
+                  function: (selector_expression
+                    operand: (identifier)
+                    field: (field_identifier))
+                  arguments: (argument_list
+                    (identifier)))))
+            (attribute
+              name: (attribute_name)
+              value: (quoted_attribute_value
+                (attribute_value))))
+          (element_text)
+          (tag_end
+            name: (element_identifier)))
+        (tag_end
+          name: (element_identifier)))
+      (element
+        (self_closing_tag
+          name: (element_identifier))))))
+
+====
+Component with if / else
+====
+
+package foobar
+
+templ MyComponent(loggedIn bool) {
+  if loggedIn {
+    <a href="/logout">Logout</a>
+  } else {
+    <a href="/login">Login</a>
+  }
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (component_if_statement
+        condition: (identifier)
+        consequence: (component_block
+          (element
+            (tag_start
+              name: (element_identifier)
+              (attribute
+                name: (attribute_name)
+                value: (quoted_attribute_value
+                  (attribute_value))))
+            (element_text)
+            (tag_end
+              name: (element_identifier))))
+        alternative: (component_block
+          (element
+            (tag_start
+              name: (element_identifier)
+              (attribute
+                name: (attribute_name)
+                value: (quoted_attribute_value
+                  (attribute_value))))
+            (element_text)
+            (tag_end
+              name: (element_identifier))))))))
+
+====
+Component with nested ifs
+====
+
+package foobar
+
+templ MyComponent(loggedIn bool, n int) {
+  if loggedIn {
+    if n > 10 {
+      <hr/>
+    }
+  } else {
+    if n > 20 {
+      <hr/>
+    }
+  }
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier))
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (component_if_statement
+        condition: (identifier)
+        consequence: (component_block
+          (component_if_statement
+            condition: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            consequence: (component_block
+              (element
+                (self_closing_tag
+                  name: (element_identifier))))))
+        alternative: (component_block
+          (component_if_statement
+            condition: (binary_expression
+              left: (identifier)
+              right: (identifier))
+            consequence: (component_block
+              (element
+                (self_closing_tag
+                  name: (element_identifier))))))))))
+
+====
+If in an element
+====
+
+package foobar
+
+templ MyComponent(n int) {
+	<ul>
+  if n > 10 {
+      <hr/>
+  }
+  </ul>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier))
+        (component_if_statement
+          condition: (binary_expression
+            left: (identifier)
+            right: (identifier))
+          consequence: (component_block
+            (element
+              (self_closing_tag
+                name: (element_identifier)))))
+        (tag_end
+          name: (element_identifier))))))
+
+====
+Composition of components
+====
+
+package foobar
+
+templ Header(title string) {
+  <h1>{ title }</h1>
+}
+
+templ Body(body string) {
+  <p>{ body }</p>
+}
+
+templ Page(title string, body string) {
+  @Header(title)
+  @Body(body)
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier))
+        (expression
+          (identifier))
+        (tag_end
+          name: (element_identifier)))))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier))
+        (expression
+          (identifier))
+        (tag_end
+          name: (element_identifier)))))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier))
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (component_import
+        name: (component_identifier)
+        arguments: (argument_list
+          (identifier)))
+      (component_import
+        name: (component_identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+=====
+Long text
+=====
+
+package main
+
+templ Foobar() {
+  <div>
+    foobar_foobar_foobariflolhahah
+    hello if hello
+    </div>
+  <div>if</div>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list)
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier))
+        (element_text)
+        (element_text)
+        (tag_end
+          name: (element_identifier)))
+      (element
+        (tag_start
+          name: (element_identifier))
+        (element_text)
+        (tag_end
+          name: (element_identifier))))))
+
+====
+Component as parameter
+====
+
+package main
+
+templ Foobar(component templ.Component) {
+  <hr/>
+  {! component }
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (qualified_type
+          package: (package_identifier)
+          name: (type_identifier))))
+    (component_block
+      (element
+        (self_closing_tag
+          name: (element_identifier)))
+      (component_render
+        expression: (identifier)))))
+
+====
+Render with argument
+====
+
+package main
+
+templ email(name string, email string) {
+  <a href={ email }>{ name }</a>
+}
+
+templ Foobar(name string, email string) {
+  <p>{! email(name, email) }</p>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier))
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier)
+          (attribute
+            name: (attribute_name)
+            value: (expression
+              (identifier))))
+        (expression
+          (identifier))
+        (tag_end
+          name: (element_identifier)))))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier))
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (element
+        (tag_start
+          name: (element_identifier))
+        (component_render
+          expression: (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              (identifier)
+              (identifier))))
+        (tag_end
+          name: (element_identifier))))))
+
+====
+Wrap children
+====
+
+package main
+
+templ showAll() {
+    @wrapChildren() {
+        <div>Inserted from the top</div>
+    }
+}
+
+templ wrapChildren() {
+    <div id="wrapper">
+        { children... }
+    </div>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    (component_identifier)
+    (parameter_list)
+    (component_block
+      (component_import
+        (component_identifier)
+        (argument_list)
+        (component_block
+          (element
+            (tag_start
+              (element_identifier))
+            (element_text)
+            (tag_end
+              (element_identifier)))))))
+  (component_declaration
+    (component_identifier)
+    (parameter_list)
+    (component_block
+      (element
+        (tag_start
+          (element_identifier)
+          (attribute
+            (attribute_name)
+            (quoted_attribute_value
+              (attribute_value))))
+        (component_children_expression)
+        (tag_end
+          (element_identifier))))))
+
+===
+Doctype element
+===
+
+package main
+
+templ Foobar() {
+  <!doctype html>
+  <!DOCTYPE html>
+  <h1>Foobar</h1>
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list)
+    (component_block
+      (element
+        (doctype
+          name: (element_identifier)))
+      (element
+        (doctype
+          name: (element_identifier)))
+      (element
+        (tag_start
+          name: (element_identifier))
+        (element_text)
+        (tag_end
+          name: (element_identifier))))))
+
+====
+Component with comments
+====
+
+package foobar
+
+// This is the greatest component of all time
+templ MyComponent(loggedIn bool) {
+  if loggedIn {
+    <!-- <a href="/logout">Logout</a> -->
+    <a href="/logout">Exit</a>
+  } else {
+    <a href="/login">Login</a>
+    <!--
+      <div>The login page LOGO</div>
+    -->
+  }
+}
+
+---
+
+(source_file
+  (package_clause
+    (package_identifier))
+  (comment)
+  (component_declaration
+    name: (component_identifier)
+    (parameter_list
+      (parameter_declaration
+        name: (identifier)
+        type: (type_identifier)))
+    (component_block
+      (component_if_statement
+        condition: (identifier)
+        consequence: (component_block
+          (element_comment)
+          (element
+            (tag_start
+              name: (element_identifier)
+              (attribute
+                name: (attribute_name)
+                value: (quoted_attribute_value
+                  (attribute_value))))
+            (element_text)
+            (tag_end
+              name: (element_identifier))))
+        alternative: (component_block
+          (element
+            (tag_start
+              name: (element_identifier)
+              (attribute
+                name: (attribute_name)
+                value: (quoted_attribute_value
+                  (attribute_value))))
+            (element_text)
+            (tag_end
+               name: (element_identifier)))
+          (element_comment))))))
+
+

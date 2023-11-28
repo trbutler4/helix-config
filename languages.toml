@@ -1,8 +1,20 @@
 
 
+########### TS/JS ###################
 [[language]]
 name = "typescript"
-language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
+language-servers = [ { name = "efm-lsp-prettier", only-features = [ "format" ] }, "typescript-language-server" ]
+formatter = ["vscode-eslint-language-server"]
+auto-format = true
+[language-server.efm-lsp-prettier]
+command = "efm-langserver"
+[language-server.efm-lsp-prettier.config]
+documentFormatting = true
+languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT}", formatStdin = true } ] }
+[language-server.tailwindcss]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
 
 [[language]]
 name = "python"

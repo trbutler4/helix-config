@@ -1,0 +1,138 @@
+================================================================================
+Callback handler with assign statement
+================================================================================
+
+Example := Window {
+    Button {
+        clicked => { counter += 3 }
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (type_identifier)
+        (comp_body
+          (call_back_handler
+            (function_identifier)
+            (handler_body
+              (comp_assign_expression
+                (identifier)
+                (int_literal)))))))))
+
+================================================================================
+Callback definition
+================================================================================
+
+Example := Rectangle {
+    callback hello;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_definition
+        (function_identifier)))))
+
+================================================================================
+Callback definition with parameters
+================================================================================
+
+Example := Rectangle {
+    callback hello(int, string);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_definition
+        (function_identifier)
+        (call_back_parameters
+          (identifier
+            (type_builtin))
+          (identifier
+            (type_builtin)))))))
+
+================================================================================
+Callback definition with parameters and return type
+================================================================================
+
+Example := Rectangle {
+    callback hello(int, string) -> int;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_definition
+        (function_identifier)
+        (call_back_parameters
+          (identifier
+            (type_builtin))
+          (identifier
+            (type_builtin)))
+        (identifier
+          (type_builtin))))))
+
+================================================================================
+Callback handler with parameters
+================================================================================
+
+Example := Rectangle {
+    hello(aa, bb) => { aa + bb; }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_handler
+        (function_identifier)
+        (call_back_parameters
+          (identifier)
+          (identifier))
+        (handler_body
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Callback alias
+================================================================================
+
+Example := Rectangle {
+    callback clicked <=> area.clicked;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (call_back_definition
+        (function_identifier)
+        (field_expression
+          (identifier)
+          (identifier))))))

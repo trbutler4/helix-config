@@ -1,0 +1,592 @@
+================================================================================
+Empty entity
+================================================================================
+
+Person
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))))
+
+================================================================================
+Various attribute shapes
+================================================================================
+
+Person @MigrationOnly !no-migrate a=b
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (attributes
+      (attribute_name)
+      (attribute_exclamation_mark)
+      (attribute_key_value
+        (attribute_name)
+        (string)))))
+
+================================================================================
+Entity with one field
+================================================================================
+
+Person
+  name Text
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type))))))
+
+================================================================================
+Indented entity
+================================================================================
+
+  Person
+    name Text
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type))))))
+
+================================================================================
+Entity with CPP comment
+================================================================================
+
+  -- | Doc comment
+  # CPP comment
+  -- Line comment
+  Person
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (comment)
+  (comment)
+  (comment)
+  (entity_definition
+    (type_name
+      (type))))
+
+================================================================================
+Entity with comments
+================================================================================
+
+  -- | Doc comment
+  Person  -- same line as entity name
+-- indented 1
+  -- indented 2
+    -- indented 3
+      -- indented 4
+    name Text -- field comment
+    -- between entity lines
+    email Text
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (comment)
+  (entity_definition
+    (type_name
+      (type))
+    (comment)
+    (comment)
+    (comment)
+    (comment)
+    (comment)
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (comment)
+      (comment)
+      (field_definition
+        (variable)
+        (type_name
+          (type))))))
+
+================================================================================
+Entity with deriving classes
+================================================================================
+
+Person
+  name Text
+  deriving Show
+  deriving Eq Ord
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (entity_deriving
+        (type))
+      (entity_deriving
+        (type)
+        (type)))))
+
+================================================================================
+Entity with extra newlines
+================================================================================
+
+Person
+
+  name Text
+
+  email Text
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type))))))
+
+================================================================================
+Entity with a list field
+================================================================================
+
+Person
+  names [Text]
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_list
+          (type_name
+            (type)))))))
+
+================================================================================
+Entity with a tuple field
+================================================================================
+
+Person
+  names (Text, Text)
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_tuple
+          (type_name
+            (type))
+          (comma)
+          (type_name
+            (type)))))))
+
+================================================================================
+Entity with field type with type application
+================================================================================
+
+Person
+  details (JSONB [Details])
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_parens
+          (type_apply
+            (type_name
+              (type))
+            (type_list
+              (type_name
+                (type)))))))))
+
+================================================================================
+Entity with ticked type
+================================================================================
+
+CustomerTransfer
+    customerId CustomerId
+    moneyAmount (MoneyAmount 'Customer 'Debit)
+    currencyCode CurrencyCode
+    uuid TransferUuid
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_parens
+          (type_apply
+            (type_name
+              (type))
+            (type_name
+              (promoted
+                (type)))
+            (type_name
+              (promoted
+                (type))))))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type))))))
+
+================================================================================
+Entity with custom id column
+================================================================================
+
+Person
+  Id UUID default=uuid_generate_v1mc()
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (surrogate_key
+        (type_name
+          (type))
+        (attributes
+          (attribute_key_value
+            (attribute_name)
+            (string)))))))
+
+================================================================================
+Entity with composite primary key
+================================================================================
+
+Email
+    firstPart   Text
+    secondPart  Text
+
+    Primary firstPart secondPart sql=b
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (natural_key
+        (fields
+          (variable)
+          (variable))
+        (attributes
+          (attribute_key_value
+            (attribute_name)
+            (string)))))))
+
+================================================================================
+Entity with field attributes
+================================================================================
+
+Person
+  name Text Maybe default="Unknown" maxlen=50 somefloat=1.2 anotherfloat=0.5e10 !attr MigrationOnly
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type))
+        (attributes
+          (attribute_name)
+          (attribute_key_value
+            (attribute_name)
+            (string))
+          (attribute_key_value
+            (attribute_name)
+            (integer))
+          (attribute_key_value
+            (attribute_name)
+            (float))
+          (attribute_key_value
+            (attribute_name)
+            (float))
+          (attribute_exclamation_mark)
+          (attribute_name))))))
+
+================================================================================
+Entity with field attribute with special characters
+================================================================================
+
+Person
+  details Details default='[]'::jsonb
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type))
+        (attributes
+          (attribute_key_value
+            (attribute_name)
+            (string)))))))
+
+================================================================================
+Entity with deriving clause in the middle
+================================================================================
+
+Person
+  name Text
+  email Text
+  deriving Eq
+  UniqueEmail email sql=email_id_key
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (entity_deriving
+        (type))
+      (unique_constraint
+        (constructor)
+        (fields
+          (variable))
+        (attributes
+          (attribute_key_value
+            (attribute_name)
+            (string)))))))
+
+================================================================================
+Entity with unique constraint
+================================================================================
+
+Person
+  name Text
+  email Text
+  UniqueEmail email sql=email_id_key
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (unique_constraint
+        (constructor)
+        (fields
+          (variable))
+        (attributes
+          (attribute_key_value
+            (attribute_name)
+            (string)))))))
+
+================================================================================
+Entity with foreign constraint
+================================================================================
+
+User
+    name            Text
+    emailFirstPart  Text
+    emailSecondPart Text
+
+    Foreign Email fk_user_email emailFirstPart emailSecondPart !someattr
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (foreign_constraint
+        (type_name
+          (type))
+        (sql_constraint_name)
+        (fields
+          (variable)
+          (variable))
+        (attributes
+          (attribute_exclamation_mark))))))
+
+================================================================================
+Entity with foreign constraint, cascade
+================================================================================
+
+User
+    name            Text
+    emailFirstPart  Text
+    emailSecondPart Text
+
+    Foreign Email OnDeleteCascade OnUpdateCascade fk_user_email emailFirstPart emailSecondPart
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (foreign_constraint
+        (type_name
+          (type))
+        (cascade_action)
+        (cascade_action)
+        (sql_constraint_name)
+        (fields
+          (variable)
+          (variable))))))
+
+================================================================================
+Entity with foreign constraint, reference
+================================================================================
+
+User
+    name            Text
+    emailFirstPart  Text
+    emailSecondPart Text
+
+    Foreign Email fk_user_email emailFirstPart emailSecondPart References firstPart secondPart
+
+--------------------------------------------------------------------------------
+
+(persistent_definitions
+  (entity_definition
+    (type_name
+      (type))
+    (entity_body
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (field_definition
+        (variable)
+        (type_name
+          (type)))
+      (foreign_constraint
+        (type_name
+          (type))
+        (sql_constraint_name)
+        (fields
+          (variable)
+          (variable))
+        (references
+          (fields
+            (variable)
+            (variable)))))))

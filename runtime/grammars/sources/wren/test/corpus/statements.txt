@@ -1,0 +1,362 @@
+SPDX-FileCopyrightText: 2023 Jummit <jummit@web.de>
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+
+======
+Return
+======
+
+return 1
+
+---
+
+(source_file
+  (return_statement (number)))
+
+======
+Assign
+======
+
+color = "red"
+
+---
+
+(source_file
+	(assignment
+		(name)
+		(string)))
+
+======
+Blocks
+======
+
+{
+  func()
+  func()
+  func()
+}
+
+---
+
+(source_file
+	(block
+		(call_expression
+			(name))
+		(call_expression
+			(name))
+		(call_expression
+			(name))))
+
+====================
+Variable definitions
+====================
+
+var a = 1
+
+---
+
+(source_file
+	(variable_definition
+		(name)
+		(number)))
+
+=============
+Class methods
+=============
+
+class Button {
+	construct new(a, b) {}
+	static about() {}
+	draw(a) {}
+}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(class_body
+			(constructor
+				(method_definition
+					(name)
+					(parameter_list
+						(parameter)
+						(parameter))
+					(block)))
+			(static_method_definition
+				(method_definition
+					(name)
+					(block)))
+			(method_definition
+				(name)
+				(parameter_list
+					(parameter))
+				(block)))))
+
+======
+Getter
+======
+
+class Button {
+	disabled { false }
+}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(class_body
+			(getter_definition
+				(name)
+				(block
+					(boolean))))))
+
+======
+Setter
+======
+
+class Button {
+	color=(value) {}
+}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(class_body
+			(setter_definition
+				(name)
+				(parameter)
+				(block)))))
+
+===============
+Prefix operator
+===============
+
+class Button {
+	- {}
+}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(class_body
+			(prefix_operator_definition
+				(operator)
+				(block)))))
+
+==============
+Infix operator
+==============
+
+class Button {
+	-(other) {}
+}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(class_body
+			(infix_operator_definition
+				(operator)
+				(parameter)
+				(block)))))
+
+===================
+Subscript operators
+===================
+
+class Button {
+	[index] {}
+	[x, y] {}
+	[index]=(value) {}
+}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(class_body
+			(subscript_operator_definition
+				(parameter_list
+					(parameter))
+				(block))
+			(subscript_operator_definition
+				(parameter_list
+					(parameter)
+					(parameter))
+				(block))
+			(subscript_setter_definition
+				(parameter_list
+					(parameter))
+				(parameter)
+				(block)))))
+
+===========
+Inheritance
+===========
+
+class Pegasus is Unicorn {}
+
+---
+
+(source_file
+	(class_definition
+		(name)
+		(name)
+		(class_body)))
+
+==========
+Attributes
+==========
+
+#key
+#hidden = true
+#group(with, multiple = true, keys = "value")
+#!runtimeAccess = true
+class Example {
+  #test
+  doStuff() {}
+}
+
+---
+
+(source_file
+  (class_definition
+    (attribute
+      (attribute_value
+        (name)))
+    (attribute
+      (attribute_value
+        key: (name)
+        value: (boolean)))
+    (attribute
+      (name)
+      (attribute_value
+        (name))
+      (attribute_value
+        key: (name)
+        value: (boolean))
+      (attribute_value
+        key: (name)
+        value: (string)))
+    (runtime_attribute
+      (attribute_value
+        key: (name)
+        value: (boolean)))
+    (name)
+    (class_body
+      (attribute
+        (attribute_value
+          (name)))
+      (method_definition
+        (name)
+        body: (block)))))
+
+=======
+Imports
+=======
+
+import "abc"
+import "beverages" for Coffee, Water as H2O
+
+---
+
+(source_file
+	(import_statement
+		(string))
+	(import_statement
+		(string)
+		(name)
+		(rename
+			(name)
+			(name))))
+
+=============
+If statements
+=============
+
+if (ready) return 1 else return 5
+
+---
+
+(source_file
+	(if_statement
+		(name)
+		(return_statement
+			(number))
+		(else_branch
+			(return_statement
+				(number)))))
+
+==============
+For statements
+==============
+
+for (beatle in ["paul", "ringo"]) {
+  print(beatle)
+}
+
+---
+
+(source_file
+	(for_statement
+		(name)
+		(list
+			(string)
+			(string))
+		(block
+			(call_expression
+				(name)
+				(parameter_list
+					(name))))))
+
+================
+While statements
+================
+
+while (n != 1) {
+	break
+}
+
+---
+
+(source_file
+	(while_statement
+		(binary_expression
+			(name)
+			(operator)
+			(number))
+		(block
+			(break_statement))))
+
+================
+Control keywords
+================
+
+continue
+break
+
+---
+
+(source_file
+	(continue_statement)
+	(break_statement))
+
+=======
+Shebang
+=======
+
+#!/usr/bin/env wren
+
+---
+
+(source_file
+	(shebang))

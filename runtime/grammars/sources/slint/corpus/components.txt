@@ -1,0 +1,274 @@
+================================================================================
+A basic window
+================================================================================
+
+AppWindow := Window {
+
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body)))
+
+================================================================================
+Visibility modifier
+================================================================================
+
+export AppWindow := Window {
+
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (vis)
+    (type_identifier)
+    (type_identifier)
+    (comp_body)))
+
+================================================================================
+A window with a sub component
+================================================================================
+
+AppWindow := Window {
+    Rectangle {
+
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (type_identifier)
+        (comp_body)))))
+
+================================================================================
+Setting a property
+================================================================================
+
+MyApp := Window {
+    preferred-width: 200px;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (assign_property
+        (identifier)
+        (num_units
+          (int_literal)
+          (units))))))
+
+================================================================================
+Property declaration
+================================================================================
+
+Example := Rectangle {
+    in-out property<int> my-property;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_property
+        (type_identifier
+          (type_builtin))
+        (identifier)))))
+
+================================================================================
+Two way binding
+================================================================================
+
+Example := Window {
+    property<brush> rect-color <=> r.background;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (two_way_property
+        (type_identifier
+          (type_builtin))
+        (identifier)
+        (field_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Relative values
+================================================================================
+
+Example := Window {
+    width: parent.width * 50%;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (assign_property
+        (identifier)
+        (binary_expression
+          (field_expression
+            (identifier
+              (variable_builtin))
+            (identifier))
+          (num_units
+            (int_literal)
+            (units)))))))
+
+================================================================================
+Define and set a property
+================================================================================
+
+Example := Window {
+    property<int> p: 5px;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (type_identifier
+          (type_builtin))
+        (identifier)
+        (num_units
+          (int_literal)
+          (units))))))
+
+================================================================================
+Named sub component
+================================================================================
+
+Example := Rectangle {
+    foo := Rectangle {
+        x: 42px;
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (type_identifier)
+        (type_identifier)
+        (comp_body
+          (assign_property
+            (identifier)
+            (num_units
+              (int_literal)
+              (units))))))))
+
+================================================================================
+Conditional named component
+================================================================================
+
+Example := Window {
+    if area.pressed : foo := Rectangle { background: blue; }
+}
+
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (field_expression
+          (identifier)
+          (identifier))
+        (type_identifier)
+        (type_identifier)
+        (comp_body
+          (assign_property
+            (identifier)
+            (identifier
+              (constant_builtin))))))))
+
+================================================================================
+Conditional unnamed component
+================================================================================
+
+Example := Window {
+    if !area.pressed : Rectangle { background: red; }
+}
+
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (component_item
+        (unary_expression
+          (field_expression
+            (identifier)
+            (identifier)))
+        (type_identifier)
+        (comp_body
+          (assign_property
+            (identifier)
+            (identifier
+              (constant_builtin))))))))
+
+================================================================================
+Function as scoped ident
+================================================================================
+
+Example := Window {
+    property<float> x1: "5.0".to-float();
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_item
+    (type_identifier)
+    (type_identifier)
+    (comp_body
+      (define_assign_property
+        (type_identifier
+          (type_builtin))
+        (identifier)
+        (call_expression
+          (field_expression
+            (string_literal)
+            (identifier))
+          (function_call_args))))))

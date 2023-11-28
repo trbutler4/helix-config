@@ -1,0 +1,806 @@
+================================================================================
+Strace Line
+================================================================================
+
+execve("/usr/bin/ls", ["ls"], 0x7ffdcc909270 /* 84 vars */) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (string
+          (string_content)))
+      (parameter
+        (list
+          (parameter
+            (string
+              (string_content)))))
+      (parameter
+        (values
+          (value
+            (pointer)))
+        (comment)))
+    (returnValue
+      (integer))))
+
+================================================================================
+Strace Line with comments and return error
+================================================================================
+
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffdb9571610) = -1 EINVAL (Argument invalide)
+access("/etc/ld.so.preload", R_OK)      = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (pointer)))
+        (comment))
+      (parameter
+        (values
+          (value
+            (pointer)))))
+    (returnValue
+      (integer)
+      (errorName)
+      (errorDescription
+        (errorContent))))
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (string
+          (string_content)))
+      (parameter
+        (values
+          (value))))
+    (returnValue
+      (integer))))
+
+================================================================================
+string with escape sequences
+================================================================================
+
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0 s\0\0\0\0\0\0"..., 832) = 832
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (string
+          (string_content)
+          (string_content)
+          (string_content)))
+      (parameter
+        (values
+          (value
+            (integer)))))
+    (returnValue
+      (integer))))
+
+================================================================================
+dictionary
+================================================================================
+
+newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=42992, ...}, AT_EMPTY_PATH) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (string))
+      (parameter
+        (dict
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value
+                  (integer)))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value
+                  (integer)))))))
+      (parameter
+        (values
+          (value))))
+    (returnValue
+      (integer))))
+
+================================================================================
+dictonary element contains a syscall
+================================================================================
+
+newfstatat(1, "", {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}, AT_EMPTY_PATH) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (string))
+      (parameter
+        (dict
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value
+                  (integer)))))
+          (dictElem
+            (dictKey)
+            (syscall)
+            (parameters
+              (parameter
+                (values
+                  (value
+                    (pointer))))
+              (parameter
+                (values
+                  (value
+                    (integer))))))))
+      (parameter
+        (values
+          (value))))
+    (returnValue
+      (integer))))
+
+================================================================================
+line with array
+================================================================================
+
+poll([{fd=0, events=0}, {fd=1, events=0}, {fd=2, events=0}], 3, 0) = 0 (Timeout)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (list
+          (parameter
+            (dict
+              (dictElem
+                (dictKey)
+                (parameter
+                  (values
+                    (value
+                      (integer)))))
+              (dictElem
+                (dictKey)
+                (parameter
+                  (values
+                    (value
+                      (integer)))))))
+          (parameter
+            (dict
+              (dictElem
+                (dictKey)
+                (parameter
+                  (values
+                    (value
+                      (integer)))))
+              (dictElem
+                (dictKey)
+                (parameter
+                  (values
+                    (value
+                      (integer)))))))
+          (parameter
+            (dict
+              (dictElem
+                (dictKey)
+                (parameter
+                  (values
+                    (value
+                      (integer)))))
+              (dictElem
+                (dictKey)
+                (parameter
+                  (values
+                    (value
+                      (integer)))))))))
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (values
+          (value
+            (integer)))))
+    (returnValue
+      (integer)
+      (errorDescription
+        (errorContent)))))
+
+================================================================================
+dictkey is alphanumeric
+================================================================================
+
+epoll_ctl(3, EPOLL_CTL_ADD, 4, {events=EPOLLIN|EPOLLRDHUP|EPOLLET, data={u32=2147483648, u64=2147483648}}) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (values
+          (value)))
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (dict
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (dict
+                (dictElem
+                  (dictKey)
+                  (parameter
+                    (values
+                      (value
+                        (integer)))))
+                (dictElem
+                  (dictKey)
+                  (parameter
+                    (values
+                      (value
+                        (integer)))))))))))
+    (returnValue
+      (integer))))
+
+================================================================================
+tilda before array
+================================================================================
+
+rt_sigprocmask(SIG_BLOCK, ~[], [], 8)   = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value)))
+      (parameter
+        (list))
+      (parameter
+        (list))
+      (parameter
+        (values
+          (value
+            (integer)))))
+    (returnValue
+      (integer))))
+
+================================================================================
+dictonary function
+================================================================================
+
+clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7f186f57a990, parent_tid=0x7f186f57a990, exit_signal=0, stack=0x7f186f37a000, stack_size=0x1ff900, tls=0x7f186f57a6c0} => {parent_tid=[341492]}, 88) = 341492
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (dictFn
+          (dict
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value)
+                  (value)
+                  (value)
+                  (value)
+                  (value)
+                  (value)
+                  (value)
+                  (value)
+                  (value))))
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value
+                    (pointer)))))
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value
+                    (pointer)))))
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value
+                    (integer)))))
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value
+                    (pointer)))))
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value
+                    (pointer)))))
+            (dictElem
+              (dictKey)
+              (parameter
+                (values
+                  (value
+                    (pointer))))))
+          (dict
+            (dictElem
+              (dictKey)
+              (parameter
+                (list
+                  (parameter
+                    (values
+                      (value
+                        (integer))))))))))
+      (parameter
+        (values
+          (value
+            (integer)))))
+    (returnValue
+      (integer))))
+
+================================================================================
+error description is [a-zA-Z_ ]
+================================================================================
+
+fcntl(3, F_GETFL)                       = 0 (flags O_RDONLY)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (values
+          (value))))
+    (returnValue
+      (integer)
+      (errorDescription
+        (errorContent)))))
+
+================================================================================
+flags error one flag
+================================================================================
+
+fcntl(3, F_GETFL)                       = 0 (flags O_RDONLY)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (values
+          (value))))
+    (returnValue
+      (integer)
+      (errorDescription
+        (errorContent)))))
+
+================================================================================
+ioctl
+================================================================================
+
+ioctl(9, TCGETS, 0x7ffd9a3205d0)        = -1 ENOTTY (Ioctl() inappropré pour un périphérique)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (values
+          (value)))
+      (parameter
+        (values
+          (value
+            (pointer)))))
+    (returnValue
+      (integer)
+      (errorName)
+      (errorDescription
+        (errorContent)
+        (errorContent)))))
+
+================================================================================
+dictvalue is optional
+================================================================================
+
+ioctl(0, TCSETSW, {c_iflag=, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter
+        (values
+          (value)))
+      (parameter
+        (dict
+          (dictElem
+            (dictKey))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)))))))
+    (returnValue
+      (integer))))
+
+================================================================================
+values can hold a pointer
+================================================================================
+
+rt_sigaction(SIGTSTP, {sa_handler=0x564e8ee75940, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART|SA_RESETHAND|0xffffffff00000000, sa_restorer=0x7f4c3171aab0}, NULL, 8) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value)))
+      (parameter
+        (dict
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value
+                  (pointer)))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (list)))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value
+                  (pointer)))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value
+                  (pointer)))))))
+      (parameter)
+      (parameter
+        (values
+          (value
+            (integer)))))
+    (returnValue
+      (integer))))
+
+================================================================================
+Interleaf
+================================================================================
+
+374673 munmap(0x7f8f32639000, 1851392 <unfinished ...>
+374672 <... close resumed>)             = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (values
+          (value
+            (pointer))))
+      (parameter
+        (values
+          (value
+            (integer))))))
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters)
+    (returnValue
+      (integer))))
+
+================================================================================
+Resumed
+================================================================================
+
+34724 <... ioctl resumed>, {c_iflag=ICRNL, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+34724 <... ioctl resumed>, {c_iflag=ICRNL, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (dict
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)))))))
+    (returnValue
+      (integer)))
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (dict
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value))))
+          (dictElem
+            (dictKey)
+            (parameter
+              (values
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)
+                (value)))))))
+    (returnValue
+      (integer))))
+
+================================================================================
+assign parameter (a=b)
+================================================================================
+
+215170 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7efefab6ea10) = 215171
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters
+      (parameter)
+      (parameter
+        (values
+          (value)
+          (value)
+          (value)))
+      (parameter
+        (values
+          (value
+            (pointer)))))
+    (returnValue
+      (integer))))
+
+================================================================================
+resumed + finished immediatly
+================================================================================
+
+215173 <... epoll_wait resumed> <unfinished ...>) = ?
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters)
+    (returnValue)))
+
+================================================================================
+kill signal
+================================================================================
+
+215173 +++ killed by SIGINT +++
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pid
+    (integer))
+  (killSignal
+    (value)))
+
+================================================================================
+macro == value
+================================================================================
+
+215170 <... wait4 resumed>[{WIFSIGNALED(s) && WTERMSIG(s) == SIGINT}], 0, NULL) = 215171
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pid
+    (integer))
+  (line
+    (syscall)
+    (parameters
+      (parameter
+        (list
+          (parameter
+            (dict
+              (dictElem
+                (macro)
+                (macro)
+                (value))))))
+      (parameter
+        (values
+          (value
+            (integer))))
+      (parameter))
+    (returnValue
+      (integer))))

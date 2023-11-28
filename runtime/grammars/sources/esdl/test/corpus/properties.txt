@@ -1,0 +1,186 @@
+==================
+Property declaration
+==================
+
+module default {
+    type Movie {
+        property Title: str;
+    }
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (object_type
+        (identifier)
+        (declarations
+          (property
+            (identifier)
+            (type)))))))
+
+
+==================
+Extending Property 
+==================
+
+module default {
+    type Movie {
+        property address: str {
+            extending address_base;
+        }
+    }
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (object_type
+        (identifier)
+        (declarations
+          (property
+            (identifier)
+            (type)
+            (declarations
+              (extending
+                (type
+                  (identifier))))))))))
+
+==================
+Property with modifiers 
+==================
+
+module default {
+    type Movie {
+        required property address: str;
+        required overloaded property name: str;
+    }
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (object_type
+        (identifier)
+        (declarations
+          (property
+            (modifier)
+            (identifier)
+            (type))
+          (property
+            (modifier)
+            (modifier)
+            (identifier)
+            (type)))))))
+      
+==================
+Abstract Property 
+==================
+
+module default {
+    abstract property addess_base {}
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (property
+        (modifier)
+        (identifier)
+        (declarations)))))
+
+==================
+Abstract Property with annotation
+==================
+
+module default {
+    abstract property addess_base {
+        annotation title := 'Mailing address';
+    }
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (property
+        (modifier)
+        (identifier)
+        (declarations
+          (annotation
+            (identifier)
+            (expression
+              (string
+                (string_fragment)))))))))
+
+==================
+Computed Property
+==================
+
+module default {
+    type Movie {
+        property is_self := (.id = global current_user_id);
+    }
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (object_type
+        (identifier)
+        (declarations
+          (property
+            (identifier)
+            (expression
+              (expression
+                (binary_expression
+                  (expression
+                    (identifier))
+                  (expression
+                    (identifier)))))))))))
+
+==================
+Property with declarations
+==================
+
+module default {
+    type Movie {
+        property Title: str {
+            readonly := true;
+        }
+    }
+}
+
+---
+
+(source_file
+  (module
+    (identifier)
+    (schema_declarations
+      (object_type
+        (identifier)
+        (declarations
+          (property
+            (identifier)
+            (type)
+            (declarations
+              (property
+                (identifier)
+                (expression
+                  (true))))))))))
