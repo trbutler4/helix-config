@@ -4,6 +4,7 @@ theme = "custom"
 line-number = "relative"
 #bufferline = "multiple"
 color-modes = true
+rulers = [80,120]
 
 [editor.cursor-shape]
 insert = "bar"
