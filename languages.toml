@@ -1,8 +1,9 @@
 
 
+
 [[language]]
 name = "typescript"
-language-servers = [ { name = "efm-lsp-prettier", only-features = [ "format" ] }, "typescript-language-server" ]
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
 formatter = ["vscode-eslint-language-server"]
 auto-format = true
 [language-server.efm-lsp-prettier]
