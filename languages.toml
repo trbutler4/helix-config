@@ -1,11 +1,4 @@
 
-
-
-[[language]]
-name = "typescript"
-language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
-formatter = ["vscode-eslint-language-server"]
-auto-format = true
 [language-server.efm-lsp-prettier]
 command = "efm-langserver"
 [language-server.efm-lsp-prettier.config]
@@ -14,6 +7,17 @@ languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT
 [language-server.tailwindcss]
 command = "tailwindcss-language-server"
 args = ["--stdio"]
+
+
+[[language]]
+name = "typescript"
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
+formatter = ["vscode-eslint-language-server"]
+
+[[language]]
+name = "tsx"
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "efm-lsp-prettier" ]
+formatter = ["vscode-eslint-language-server"]
 
 [[language]]
 name = "python"
